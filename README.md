@@ -89,6 +89,13 @@ other phenomena.
 
 ![Kepler-934 Transits](docs/kepler-943-transits.png)
 
+rgp insert from https://ui.adsabs.harvard.edu/abs/2019AAS...23314004G/abstract
+
+The Transiting Exoplanet Survey Satellite (TESS) is NASA's newest exoplanet hunter. Launched in the spring of 2018, TESS began its two-year science mission to image nearly the entire sky on July 25, 2018. Each observing sector lasts for two ~13 day orbits. At perigee, data is downlinked back to MIT's Payload Operations Center (POC) through the Deep Space Network. The POC converts the data and delivers it to the NASA Ames Science Processing Operations Center (SPOC) where it is calibrated and sent through their pipeline. The pipeline searches for threshold crossing events (TCEs) in the 2-minute postage stamp data. Concurrently at MIT, the 30-minute full-frame images are sent through MIT's Quick Look Pipeline to search for additional TCEs. TCEs with high enough significance are converted into a data validation report. These reports are then fed into MIT's TESS Exoplanet Vetter (TEV). TEV is a web-based tool that allows human vetters to view the reports and easily share their assessment with the rest of the vetting team. Vetting is split into two stages. First, each object is reviewed by up to four individual vetters to determine its disposition. Potential dispositions are Planet Candidate, Eclipsing Binary, Stellar Variability, Instrument Noise, Other Astrophysical, and Undecided. Next, objects that are potential Planet Candidates are sent to a group review for further validation. Planet Candidates that survive group review are quickly shared with the community and the TESS Follow-up Observing Program (TFOP). TFOP coordinates observations of these candidates to confirm and characterize them as planets or reject them as false positives. The TESS Objects of Interest (TOI) Catalog is crafted from the final dispositions of each object, excluding signals caused by instrument noise. The TOI Catalog will be made public no later than January 2019 on the MIT TESS website and ExoFOP-TESS.
+
+end of insert
+
+
 **The CSV creation step needs to be run on PDO, but I have included the complete CSV file (`astronet/tces.csv`) that I used to train the model.**
 
 The TESS TCE lists for each sector are available on the TEV website. Download them as CSVs, and run `make_catalog.py` in the `data` folder to create a catalog that combines all sectors. e.g.:
