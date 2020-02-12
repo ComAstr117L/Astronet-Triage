@@ -68,7 +68,9 @@ First, ensure that you have installed the following required packages:
 * **AstroPy** ([instructions](http://www.astropy.org/))
 * **PyDl** ([instructions](https://pypi.python.org/pypi/pydl))
 
-### Download TESS Data
+### Download TESS Data 
+
+Note: This will not run without the tsig module, which is in-house - rgp
 
 A *light curve* is a plot of the brightness of a star over time. We will be
 focusing on light curves produced by the TESS space telescope. An example
@@ -218,7 +220,8 @@ import os.path
 import tensorflow as tf
 
 In[2]:
-TIC_ID = 270341214
+#TIC_ID = 270341214 NOT IN THE DATASET - rgp
+TIC_ID = 350146577
 TFRECORD_DIR = "/path/to/tfrecords/dir"
 
 In[3]:
@@ -230,7 +233,8 @@ def find_tce(tic_id, filenames):
       if ex.features.feature["tic_id"].int64_list.value[0] == tic_id:
         print("Found {} in file {}".format(tic_id, filename))
         return ex
-        raise ValueError("{} not found in files: {}".format(tic_id, filenames))
+# I changed the indent level of the following line two steps leftward - rgp
+    raise ValueError("{} not found in files: {}".format(tic_id, filenames))
 
 In[4]:
 # Find sample TCE
