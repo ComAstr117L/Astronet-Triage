@@ -241,7 +241,7 @@ def find_tce(tic_id, filenames):
         print("Found {} in file {}".format(tic_id, filename))
         return ex
 # I changed the indent level of the following line two steps leftward - rgp
-    raise ValueError("{} not found in files: {}".format(tic_id, filenames))
+  raise ValueError("{} not found in files: {}".format(tic_id, filenames))
 
 In[4]:
 # Find sample TCE
