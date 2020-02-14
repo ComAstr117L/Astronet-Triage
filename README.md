@@ -63,10 +63,12 @@ Full text available at [*The Astronomical Journal*](http://iopscience.iop.org/ar
 First, ensure that you have installed the following required packages:
 
 * **TensorFlow** ([instructions](https://www.tensorflow.org/install/))
+* Note: use `conda install -c conda-forge tensorflow=1.15.00` - rgp* 
 * **Pandas** ([instructions](http://pandas.pydata.org/pandas-docs/stable/install.html))
 * **NumPy** ([instructions](https://docs.scipy.org/doc/numpy/user/install.html))
 * **AstroPy** ([instructions](http://www.astropy.org/))
 * **PyDl** ([instructions](https://pypi.python.org/pypi/pydl))
+* Note: also need statsmodels `conda install -c conda-forge statsmodels'
 
 ### Download TESS Data 
 
@@ -188,6 +190,12 @@ python astronet/data/generate_input_records.py \
 --output_dir=${TFRECORD_DIR} \
 --num_worker_processes=5 
 ```
+
+*Note: This is what I ran (without success) from the `Astronet-Triage` directory of my repository clone:
+```
+python astronet/data/generate_input_records.py --input_tce_csv_file=${astronet/tces.csv} --tess_data_dir=${astronet/tess} --output_dir=${astronet/tfrecord} --num_worker_processes=5 
+```
+
 If `--clean` is included as an argument, the train and validation sets will only contain TCEs with S/N above some threshold (specified by the `--threshold` argument, default 15).
 
 If the optional `--make_test_set` argument is included, the code will generate 8 test sets instead of 8 training, 1 validation and 1 test. This is useful for creating test sets out of new data and using them to evaluate a model trained on older data. Setting `--clean` here would produce test sets containing only TCEs with S/N above some threshold.
