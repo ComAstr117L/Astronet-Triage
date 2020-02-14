@@ -63,7 +63,7 @@ Full text available at [*The Astronomical Journal*](http://iopscience.iop.org/ar
 First, ensure that you have installed the following required packages:
 
 * **TensorFlow** ([instructions](https://www.tensorflow.org/install/)) *rgp Note: use* `conda install -c conda-forge tensorflow=1.15.00` 
-* **Pandas** ([instructions](http://pandas.pydata.org/pandas-docs/stable/install.html))
+* **Pandas** ([instructions](http://pandas.pydata.org/pandas-docs/stable/install.html)) *rgp Note: use* `conda install -c conda-forge pandas=0.25`
 * **NumPy** ([instructions](https://docs.scipy.org/doc/numpy/user/install.html))
 * **AstroPy** ([instructions](http://www.astropy.org/))
 * **PyDl** ([instructions](https://pypi.python.org/pypi/pydl))
