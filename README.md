@@ -62,13 +62,12 @@ Full text available at [*The Astronomical Journal*](http://iopscience.iop.org/ar
 
 First, ensure that you have installed the following required packages:
 
-* **TensorFlow** ([instructions](https://www.tensorflow.org/install/))
-* Note: use `conda install -c conda-forge tensorflow=1.15.00` - rgp* 
+* **TensorFlow** ([instructions](https://www.tensorflow.org/install/)) *rgp Note: use* `conda install -c conda-forge tensorflow=1.15.00` 
 * **Pandas** ([instructions](http://pandas.pydata.org/pandas-docs/stable/install.html))
 * **NumPy** ([instructions](https://docs.scipy.org/doc/numpy/user/install.html))
 * **AstroPy** ([instructions](http://www.astropy.org/))
 * **PyDl** ([instructions](https://pypi.python.org/pypi/pydl))
-* Note: also need statsmodels `conda install -c conda-forge statsmodels'
+* rgp Note: also need statsmodels* `conda install -c conda-forge statsmodels'
 
 ### Download TESS Data 
 
@@ -191,7 +190,7 @@ python astronet/data/generate_input_records.py \
 --num_worker_processes=5 
 ```
 
-*Note: This is what I ran (without success) from the `Astronet-Triage` directory of my repository clone:
+*rgp Note: This is what I ran (without success) from the `Astronet-Triage` directory of my repository clone:*
 ```
 python astronet/data/generate_input_records.py --input_tce_csv_file=${astronet/tces.csv} --tess_data_dir=${astronet/tess} --output_dir=${astronet/tfrecord} --num_worker_processes=5 
 ```
