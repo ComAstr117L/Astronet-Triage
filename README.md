@@ -70,7 +70,7 @@ First, ensure that you have installed the following required packages:
 
 ### Download TESS Data 
 
-Note: This will not run without the tsig module, which is in-house - rgp
+*Note: This will not run without the tsig module, which is in-house - rgp*
 
 A *light curve* is a plot of the brightness of a star over time. We will be
 focusing on light curves produced by the TESS space telescope. An example
