@@ -217,7 +217,7 @@ the detected event centered.
 
 Here's an example of the generated representations (Kepler-90 g) in the output.
 
-*rgp: As noted above, I did get the following to work in Google colab *`drpAstronet_Triage`*:*
+*rgp: As noted above, I did get a modified version of the following to work in Google colab *`drpAstronet_Triage`*.  I note some especially significant edits here as well.*
 
 ```python
 # Launch iPython (or Python) from the tensorflow_models/astronet/ directory.
@@ -268,7 +268,7 @@ The output should look something like this:
 
 ### Train an AstroNet Model
 
-*rgp: After lots of struggling, I did get the following to run (or at least appear to run) in WSL.  Se my bash script and sample output, below.*
+*rgp: After lots of struggling, I did get the following to run (or at least appear to run) in WSL.  See my bash script and sample output, below.*
 
 The [astronet](astronet/) directory contains several types of neural
 network architecture and various configuration options. This particular version is configured to detect objects that can plausibly be planets (including PCs and EBs whose stellar variability amplitudes are less than half the depths of the eclipses).
