@@ -1,4 +1,6 @@
-# AstroNet-Triage: A Neural Network for TESS Light Curve Triage
+# Richard Piccioni's fork of AstroNet-Triage: A Neural Network for TESS Light Curve Triage
+
+Richard Piccioni: rpiccioni@marin.edu
 
 ![Transit Animation](docs/transit.gif)
 
@@ -71,7 +73,7 @@ First, ensure that you have installed the following required packages:
 
 ### Download TESS Data 
 
-*Note: This will not run without the tsig module, which is in-house - rgp*
+*Note: The code in this section (**Download TESS DATA**) will not run without the tsig module, which is not available to non-MIT users - rgp*
 
 A *light curve* is a plot of the brightness of a star over time. We will be
 focusing on light curves produced by the TESS space telescope. An example
@@ -100,6 +102,7 @@ other phenomena.
 
 
 **The CSV creation step needs to be run on PDO, but I have included the complete CSV file (`astronet/tces.csv`) that I used to train the model.**
+
 *rgp: What does it mean 'run on PDO'?*
 
 The TESS TCE lists for each sector are available on the TEV website. Download them as CSVs, and run `make_catalog.py` in the `data` folder to create a catalog that combines all sectors. e.g.:
@@ -149,9 +152,10 @@ Then, run `make_catalog.py` as usual to create a CSV file with the rest of the c
 
 **All the following steps can be run on any computer that has TESS h5 files stored in a single folder, divided by sector. If you don't have access to the original h5 files, I have included all the TFRecords used in my paper under `astronet/tfrecords` so you can skip the training set generation step.**
 
-To train a model to identify exoplanets, you will need to provide TensorFlow
-with training data in
-[TFRecord](https://www.tensorflow.org/guide/datasets) format. The
+*I don't think I have access to the TESS h5 files. For one thing, the original repo does not even have a subdirectory called *`astronet/tess`*, which is where those files would be stored.  So skip to **Train an Astronet Model**, below. Note I did get the light-curve display code at the end of this section to run in my Google colab notebook, *`drpAstronet_Triage`* as well as in WSL (presumably, since there were not error messages).  Apparently WSL cannot display graphical output.*
+
+To train a model to identify exoplanets [*as we do in the next section*], you [*first*] need to provide TensorFlow
+with training data in [TFRecord](https://www.tensorflow.org/guide/datasets) format. The
 TFRecord format consists of a set of sharded files containing serialized
 `tf.Example` [protocol buffers](https://developers.google.com/protocol-buffers/).
 
@@ -190,11 +194,6 @@ python astronet/data/generate_input_records.py \
 --num_worker_processes=5 
 ```
 
-*rgp Note: This is what I ran (without success) from the `Astronet-Triage` directory of my repository clone:*
-```
-python astronet/data/generate_input_records.py --input_tce_csv_file=${astronet/tces.csv} --tess_data_dir=${astronet/tess} --output_dir=${astronet/tfrecord} --num_worker_processes=5 
-```
-
 If `--clean` is included as an argument, the train and validation sets will only contain TCEs with S/N above some threshold (specified by the `--threshold` argument, default 15).
 
 If the optional `--make_test_set` argument is included, the code will generate 8 test sets instead of 8 training, 1 validation and 1 test. This is useful for creating test sets out of new data and using them to evaluate a model trained on older data. Setting `--clean` here would produce test sets containing only TCEs with S/N above some threshold.
@@ -215,6 +214,8 @@ means that we combine all periods of the detected TCE into a single curve, with
 the detected event centered.
 
 Here's an example of the generated representations (Kepler-90 g) in the output.
+
+*rgp: As noted above, I did get the following to work in Google colab *`drpAstronet_Triage`*:*
 
 ```python
 # Launch iPython (or Python) from the tensorflow_models/astronet/ directory.
@@ -265,6 +266,8 @@ The output should look something like this:
 
 ### Train an AstroNet Model
 
+*rgp: Aftre lots of struggling, I did get the following to run (or at least appear to run) in WSL:*
+
 The [astronet](astronet/) directory contains several types of neural
 network architecture and various configuration options. This particular version is configured to detect objects that can plausibly be planets (including PCs and EBs whose stellar variability amplitudes are less than half the depths of the eclipses).
 To train a convolutional
@@ -301,6 +304,56 @@ The TensorBoard server will show a page like this:
 ![TensorBoard](docs/tensorboard.png)
 
 The "loss" plot shows both training and validation losses. The optimum number of training steps is where validation loss reaches a minimum.
+
+*Here is the script I ran in WSL and a tiny fragment of the hours of screen output generated before my keyboard interrupt:*
+
+```# The original Astronet used Bazel, but we could just invoke the source scripts with the
+# following addition to PYTHONPATH:
+export PYTHONPATH="/astronet/:${PYTHONPATH}"
+
+# Filename containing the CSV file of TCEs in the training set.
+TCE_CSV_FILE="astronet/tces.csv"
+
+# Directory to save output TFRecord files into.
+TFRECORD_DIR="astronet/tfrecord"
+
+# Directory where light curves are located.
+TESS_DATA_DIR="astronet/tess/"
+
+# Directory to save model checkpoints into.
+MODEL_DIR="astronet/model/"
+
+# Run without Bazel
+python astronet/train.py \
+--model=AstroCNNModel \
+--config_name=local_global \
+--train_files=${TFRECORD_DIR}/train* \
+--eval_files=${TFRECORD_DIR}/val* \
+--model_dir=${MODEL_DIR} \
+--train_steps=14000
+```
+
+```
+  File "/home/drpiccioni/Astronet-Triage/astronet/ops/training.py", line 106, in create_train_op
+    transform_grads_fn=transform_grads_fn)
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/contrib/training/python/training/training.py", line 450, in create_train_op
+    colocate_gradients_with_ops=colocate_gradients_with_ops)
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/training/optimizer.py", line 512, in compute_gradients
+    colocate_gradients_with_ops=colocate_gradients_with_ops)
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/ops/gradients_impl.py", line 158, in gradients
+    unconnected_gradients)
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/ops/gradients_util.py", line 707, in _GradientsHelper
+    in_grad.set_shape(t_in.get_shape())
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/framework/ops.py", line 582, in get_shape
+    return self.shape
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/framework/ops.py", line 471, in shape
+    self._shape_val = self._c_api_shape()
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/framework/ops.py", line 497, in _c_api_shape
+    return tensor_shape.TensorShape(shape_vector)
+  File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/framework/tensor_shape.py", line 757, in __init__
+    elif isinstance(dims, tensor_shape_pb2.TensorShapeProto):
+KeyboardInterrupt
+```
 
 ### Model Averaging
 You can train a set of 10 models with random initializations and average their outputs when making predictions. This helps prevent overfitting and makes the model more robust. To do this, use the following command:
