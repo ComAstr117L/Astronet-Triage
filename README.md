@@ -2,6 +2,8 @@
 
 Richard Piccioni: rpiccioni@marin.edu
 
+*meta note: I am tring to document here my efforts to get these programs to run under Windows Subsystem for Linux (WSL).  See also my Google colaboratory notebook *`drpAstronet_Triage`*. - rgp*
+
 ![Transit Animation](docs/transit.gif)
 
 ## Contact
@@ -266,7 +268,7 @@ The output should look something like this:
 
 ### Train an AstroNet Model
 
-*rgp: Aftre lots of struggling, I did get the following to run (or at least appear to run) in WSL:*
+*rgp: After lots of struggling, I did get the following to run (or at least appear to run) in WSL.  Se my bash script and sample output, below.*
 
 The [astronet](astronet/) directory contains several types of neural
 network architecture and various configuration options. This particular version is configured to detect objects that can plausibly be planets (including PCs and EBs whose stellar variability amplitudes are less than half the depths of the eclipses).
@@ -353,6 +355,14 @@ python astronet/train.py \
   File "/home/drpiccioni/anaconda3/envs/tf/lib/python3.7/site-packages/tensorflow_core/python/framework/tensor_shape.py", line 757, in __init__
     elif isinstance(dims, tensor_shape_pb2.TensorShapeProto):
 KeyboardInterrupt
+```
+
+*In WSL, this also appeared to run, though crashing after a minute or two:*
+
+```
+# rgpTenBrd
+MODEL_DIR="astronet/model/"
+# launch TensorBoard server.
 ```
 
 ### Model Averaging
