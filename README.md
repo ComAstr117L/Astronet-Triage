@@ -6,10 +6,6 @@ Richard Piccioni: rpiccioni@marin.edu
 
 ![Transit Animation](docs/transit.gif)
 
-## Contact
-
-Liang Yu: yuliang@mit.edu
-
 ## Background
 
 This directory contains TensorFlow models and data processing code for
